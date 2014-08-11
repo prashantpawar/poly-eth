@@ -13,5 +13,11 @@
   }
 }(this, function (b) {
   // Your actual module
-  return {};
+  return polyeth = function(eth){
+    console.log( 'Polyeth loaded. wrapping/polyfilling native eth object.');
+    return {
+      eth: eth,
+      getKey: function(cb){ eth.getKey(cb); }
+    };
+  };
 }));
