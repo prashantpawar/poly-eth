@@ -13,11 +13,37 @@
   }
 }(this, function (b) {
   // Your actual module
+
+  var checkClient = function(eth) {
+    var UA = window.navigator.userAgent;
+    if (UA.match( 'Aleth' )) return 'aleth';
+    if (UA.match( 'Ethereal')) return 'ethereal'
+  }
+
   return polyeth = function(eth){
+
+    var mocketh = {
+      eth: null,
+      getKey: function(cb){ cb('MockKey213dsf3454as')}
+    }
+
+    var clients = {
+      aleth: {
+        eth: eth,
+        client: 'aleth',
+        getKey: function(cb){ return cb(eth.key); }
+      },
+
+      ethereal: {
+        eth: eth,
+        client: 'ethereal',
+        getKey: function(cb){ return eth.getKey(cb); }
+      }
+    }
+
+    if (!eth) return mocketh;
+    
     console.log( 'Polyeth loaded. wrapping/polyfilling native eth object.');
-    return {
-      eth: eth,
-      getKey: function(cb){ eth.getKey(cb); }
-    };
+    return clients[checkClient(eth)]
   };
 }));
