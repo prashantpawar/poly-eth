@@ -15,20 +15,26 @@ var polyeth = function(eth) {
 
   var mocketh = {
     eth: null,
-    getKey: function(cb){ cb('MockKey213dsf3454as')}
+    getKeys: function(cb){ cb(['MockKey213dsf3454as'])}
   }
 
   var clients = {
     aleth: {
       eth: eth,
       client: 'aleth',
-      getKey: function(cb){ return cb(eth.key); }
+      getKeys: function(cb){ return cb(eth.keys); }
     },
 
     ethereal: {
       eth: eth,
       client: 'ethereal',
-      getKey: function(cb){ return eth.getKey(cb); }
+      getKeys: function(cb){ 
+        // ethereal client has ony a single key and corresponding getter
+        return eth.getKey(function(key){
+          // wrapping in array for consistency
+          return [key];
+        }); 
+      }
     }
   }
 
@@ -37,6 +43,6 @@ var polyeth = function(eth) {
 };
 
 
-if(typeof module !== 'undefined' ) {
+if ( typeof module !== 'undefined' ) {
   module.exports = polyeth;
 }
