@@ -20,7 +20,7 @@ var polyeth = function(eth) {
   }
 
   var mocketh = {
-    eth: null,
+    eth: require( './lib/eth.js'),
     getKeys: function(cb){ cb(['MockKey213dsf3454as'])},
     secretToAddress: function(privateKey){
       return accounts[privateKey] || accounts['SELF'];
@@ -35,13 +35,24 @@ var polyeth = function(eth) {
   }
 
   var clients = {
-    aleth: {
+    aleth: checkClient( eth ) == 'aleth' && {
       eth: eth,
       client: 'aleth',
-      getKeys: function(cb){ return cb(eth.keys); }
+      getKeys: function(cb){ return cb(eth.keys); },
+      watch: eth.watch,
+      secretToAddress: eth.secretToAddress,
+      key: eth.key,
+      ready: function(cb) {
+        if (typeof jQuery !== 'undefined') {
+          jQuery( document ).ready( cb )
+        } else {
+          window.onload = cb;
+        }
+      }
+
     },
 
-    ethereal: {
+    ethereal: checkClient( eth ) == 'ethereal' && {
       eth: eth,
       client: 'ethereal',
       getKeys: function(cb){ 
