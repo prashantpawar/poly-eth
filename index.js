@@ -13,19 +13,46 @@ var polyeth = function(eth) {
     if (UA.match( 'Ethereal')) return 'ethereal'
   }
 
+  var accounts = {
+    'NAMEREG': '0xasdoa3y4oeidhasd',
+    'SELF': '0xoasidyhasod',
+    '8815f6289f656e5148b7d4dee93d5d96ee7ece8f': '8815f6289f656e5148b7d4dee93d5d96ee7ece8f'
+  }
+
   var mocketh = {
-    eth: null,
-    getKeys: function(cb){ cb(['MockKey213dsf3454as'])}
+    eth: require( './lib/eth.js'),
+    getKeys: function(cb){ cb(['MockKey213dsf3454as'])},
+    secretToAddress: function(privateKey){
+      return accounts[privateKey] || accounts['SELF'];
+    },
+    watch: function(addr, cb) {
+      console.log( 'attach change handlers for: ', addr );
+    },
+    ready: function(cb){
+      console.log( 'mocketh ready...')
+      window.onload = cb;
+    }
   }
 
   var clients = {
-    aleth: {
+    aleth: checkClient( eth ) == 'aleth' && {
       eth: eth,
       client: 'aleth',
-      getKeys: function(cb){ return cb(eth.keys); }
+      getKeys: function(cb){ return cb(eth.keys); },
+      watch: eth.watch,
+      secretToAddress: eth.secretToAddress,
+      key: eth.key,
+      ready: function(cb) {
+        if (typeof jQuery !== 'undefined') {
+          jQuery( document ).ready( cb )
+        } else {
+          window.onload = cb;
+        }
+      }
+
     },
 
-    ethereal: {
+    ethereal: checkClient( eth ) == 'ethereal' && {
       eth: eth,
       client: 'ethereal',
       getKeys: function(cb){ 
