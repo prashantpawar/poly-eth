@@ -42,6 +42,10 @@ var polyeth = function(eth) {
       watch: eth.watch,
       secretToAddress: eth.secretToAddress,
       key: eth.key,
+      balanceAt: eth.balanceAt,
+      storageAt: eth.storageAt,
+      transact: eth.transact,
+      create: eth.create,
       ready: function(cb) {
         if (typeof jQuery !== 'undefined') {
           jQuery( document ).ready( cb )
