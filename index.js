@@ -19,17 +19,24 @@ var polyeth = function(eth) {
     '8815f6289f656e5148b7d4dee93d5d96ee7ece8f': '8815f6289f656e5148b7d4dee93d5d96ee7ece8f'
   }
 
+  var watching = {}
+
   var mocketh = {
     eth: require( './lib/eth.js'),
+    client: 'mocketh',
     getKeys: function(cb){ cb(['MockKey213dsf3454as'])},
     secretToAddress: function(privateKey){
       return accounts[privateKey] || accounts['SELF'];
     },
     watch: function(addr, cb) {
-      console.log( 'attach change handlers for: ', addr );
+      console.log( 'Attach change handlers for: ', addr );
+      if (watching[addr]) {
+        watching[addr].push( cb )
+      } else {
+        watching[addr] = [cb];
+      }
     },
     ready: function(cb){
-      console.log( 'mocketh ready...')
       window.onload = cb;
     }
   }
@@ -39,6 +46,7 @@ var polyeth = function(eth) {
       eth: eth,
       client: 'aleth',
       getKeys: function(cb){ return cb(eth.keys); },
+      gasPrice: eth.gasPrice,
       watch: eth.watch,
       secretToAddress: eth.secretToAddress,
       key: eth.key,
