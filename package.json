@@ -4,7 +4,8 @@
   "description": "poly-eth",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify -e index.js -o poly-eth.bundle.js -s polyeth"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/projectdnet/poly-eth/issues"
   },
-  "homepage": "https://github.com/projectdnet/poly-eth"
+  "homepage": "https://github.com/projectdnet/poly-eth",
+  "dependencies": {
+    "browserify": "^5.10.1"
+  }
 }
