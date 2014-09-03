@@ -1,9 +1,7 @@
 {
   "name": "poly-eth",
   "main": [
-    "index.js",
-    "lib/BigInteger.js",
-    "lib/ethstring.js"
+    "index.js"
   ],
   "version": "0.0.2",
   "description": "JavaScript wrapper/polyfill around the synchronous and asynchronous eth JavaScript objects injected in the various ethereum clients.",
