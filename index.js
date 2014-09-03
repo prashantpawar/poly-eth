@@ -3,45 +3,56 @@ var bigInt = require( './lib/BigInteger' );
 var EthString = require( './lib/ethstring' );
 
 
-
-
 var polyeth = function(eth) {
 
   var checkClient = function(eth) {
     var UA = window.navigator.userAgent;
     if (UA.match( 'Aleth' )) return 'aleth';
-    if (UA.match( 'Ethereal')) return 'ethereal'
-  }
-
-  var accounts = {
-    'NAMEREG': '0xasdoa3y4oeidhasd',
-    'SELF': '0xoasidyhasod',
-    '8815f6289f656e5148b7d4dee93d5d96ee7ece8f': '8815f6289f656e5148b7d4dee93d5d96ee7ece8f'
-  }
-
-  var mocketh = {
-    eth: require( './lib/eth.js'),
-    getKeys: function(cb){ cb(['MockKey213dsf3454as'])},
-    secretToAddress: function(privateKey){
-      return accounts[privateKey] || accounts['SELF'];
-    },
-    watch: function(addr, cb) {
-      console.log( 'attach change handlers for: ', addr );
-    },
-    ready: function(cb){
-      console.log( 'mocketh ready...')
-      window.onload = cb;
-    }
+    if (UA.match( 'Ethereal')) return 'ethereal';
+    // if (UA.match( 'Ethos')) return 'ethos';
+    
+    return false;
   }
 
   var clients = {
+
+    // ethos: checkClient( eth ) == 'aleth' && mocketh,
+
     aleth: checkClient( eth ) == 'aleth' && {
       eth: eth,
       client: 'aleth',
-      getKeys: function(cb){ return cb(eth.keys); },
-      watch: eth.watch,
+      
+      // Proxy to cpp-ethereum eth/rpc object
+
+      getProcedures: eth.getProcedures,
+      getCoinbase: eth.getCoinbase,
+      getIsListening: eth.getIsListening,
+      getIsMining: eth.getIsMining,
+      getGasPrice: eth.getGasPrice,
+      getKey: eth.getKey,
+      getKeys: eth.getKeys,
+      getPeerCount: eth.getPeerCount,
+      getBalanceAt: eth.getBalanceAt,
+      balanceAt: eth.balanceAt,
+      getStorageAt: eth.getStorageAt,
+      storageAt: eth.storageAt,
+      getTxCountAt: eth.getTxCountAt,
+      txCountAt: eth.txCountAt, 
+      getIsContractAt: eth.getIsContractAt,
+      isContractAt: eth.isContractAt,
+      create: eth.create,
+      transact: eth.transact,
+      getSecretToAddress: eth.getSecretToAddress,
       secretToAddress: eth.secretToAddress,
-      key: eth.key,
+      getLll: eth.getLll,
+      lll: eth.lll,
+      check: eth.check,
+      watch: eth.watch,
+      unwatch: eth.unwatch,
+      newBlock: eth.newBlock,
+      
+      // New APIs
+      
       ready: function(cb) {
         if (typeof jQuery !== 'undefined') {
           jQuery( document ).ready( cb )
@@ -55,6 +66,9 @@ var polyeth = function(eth) {
     ethereal: checkClient( eth ) == 'ethereal' && {
       eth: eth,
       client: 'ethereal',
+      
+      // TODO: Proxy Ethereal APIs
+      
       getKeys: function(cb){ 
         // ethereal client has ony a single key and corresponding getter
         return eth.getKey(function(key){
@@ -65,7 +79,8 @@ var polyeth = function(eth) {
     }
   }
 
-  if (!eth) return mocketh;
+  // TODO: This will no longer throw errors when mocketh etc are available.
+  if (!eth) throw new Error( 'No Ethereum client.' );
   else return clients[checkClient(eth)]
 };
 
