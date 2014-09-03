@@ -1,35 +1,41 @@
 {
-  "name": "poly-eth",
-  "version": "0.0.0",
-  "description": "poly-eth",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -e index.js -o poly-eth.bundle.js -s polyeth"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/projectdnet/poly-eth.git"
-  },
-  "author": "projectdnet",
-  "contributors": [
-    {
-      "name" : "Doug A.",
-      "email" : "d11e9@mailinator.com",
-      "url" : "http://github.com/d11e9"
+    "name": "poly-eth",
+    "version": "0.0.1",
+    "description": "Poly-eth is a JavaScript wrapper/polyfill around the synchronous and asynchronous eth JavaScript objects injected in the various ethereum clients.",
+    "main": "index.js",
+    "keywords": [
+        "ethereum",
+        "polyfill"
+    ],
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "browserify -e src/index.js -o poly-eth.bundle.js -s polyeth"
     },
-    {
-      "name" : "Prashant Singh Pawar",
-      "email" : "prashantpawar@gmail.com",
-      "url" : "http://github.com/prashantpawar"
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/projectdnet/poly-eth.git"
+    },
+    "author": "projectdnet",
+    "contributors": [
+        {
+            "name" : "Doug A.",
+            "email" : "d11e9@mailinator.com",
+            "url" : "http://github.com/d11e9"
+        },
+        {
+            "name" : "Prashant Singh Pawar",
+            "email" : "prashantpawar@gmail.com",
+            "url" : "http://github.com/prashantpawar"
+        }
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/projectdnet/poly-eth/issues"
+    },
+    "homepage": "https://github.com/projectdnet/poly-eth",
+    "dependencies": {},
+    "devDependencies": {
+        "browserify": "^5.10.1",
+        "eslint": "0.6.x"
     }
-  ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/projectdnet/poly-eth/issues"
-  },
-  "homepage": "https://github.com/projectdnet/poly-eth",
-  "dependencies": {
-    "browserify": "^5.10.1"
-  }
 }
