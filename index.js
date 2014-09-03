@@ -1,8 +1,3 @@
-
-var bigInt = require( './lib/BigInteger' );
-var EthString = require( './lib/ethstring' );
-
-
 var polyeth = function(eth) {
 
   var checkClient = function(eth) {
@@ -16,7 +11,7 @@ var polyeth = function(eth) {
 
   var clients = {
 
-    // ethos: checkClient( eth ) == 'aleth' && mocketh,
+    // ethos: checkClient( eth ) == 'ethos' && mocketh,
 
     aleth: checkClient( eth ) == 'aleth' && {
       eth: eth,
